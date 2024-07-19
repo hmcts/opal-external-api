@@ -50,3 +50,10 @@ spring:
 azure:
   application-insights:
     instrumentation-key: ${opal.AppInsightsInstrumentationKey:00000000-0000-0000-0000-000000000000}
+
+s2s:
+  endpoints:
+    opal-fines-service: ${OPAL_FINES_S2S_URL:http://localhost:4553/opal}
+    opal-maintenance-service: ${OPAL_MAINTENANCE_S2S_URL:http://localhost:4554/opal}
+  api:
+    create-account: ${OPAL_S2S_CREATE_ACCOUNT_API:/api/createAccount}
