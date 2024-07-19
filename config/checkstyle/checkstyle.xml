@@ -27,7 +27,10 @@
     <property name="eachLine" value="true"/>
   </module>
   <module name="BeforeExecutionExclusionFileFilter">
-    <property name="fileNamePattern"  value=".*[\\/]generated[\\/].*$"/>
+    <property name="fileNamePattern" value=".*[\\/]generated[\\/].*$"/>
+  </module>
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern" value=".*[\\/]src-gen[\\/].*$"/>
   </module>
   <module name="SuppressionSingleFilter">
     <property name="files" value=".*[\\/]schema[\\/].*$" />
@@ -40,7 +43,6 @@
   </module>
   <module name="TreeWalker">
     <module name="UnusedImports"/>
-    <module name="HideUtilityClassConstructor"/>
     <module name="SuppressWarningsHolder" />
     <module name="OuterTypeFilename"/>
     <module name="IllegalTokenText">
