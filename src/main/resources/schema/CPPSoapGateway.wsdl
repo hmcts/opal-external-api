@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="CPPSoapGateway"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:tns="http://www.justice.gov.uk/magistrates/atcm/CPPSoapGateway"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+	xmlns:atcm-cfareq="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsRequest"
+	xmlns:atcm-cfares="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse"
+	xmlns:cpp-sreq="http://www.justice.gov.uk/magistrates/atcm/SearchRequestType"
+	xmlns:cpp-sres="http://www.justice.gov.uk/magistrates/atcm/SearchResponseType"
+
+	targetNamespace="http://www.justice.gov.uk/magistrates/atcm/CPPSoapGateway">
+
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsRequest" schemaLocation="CreateFineAccounts/CreateFineAccountsRequest.xsd" />
+			<xsd:import namespace="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse" schemaLocation="CreateFineAccounts/CreateFineAccountsResponse.xsd" />
+			<xsd:import namespace="http://www.justice.gov.uk/magistrates/atcm/SearchRequestType" schemaLocation="DebtorProfileSearch/SearchRequestType.xsd" />
+			<xsd:import namespace="http://www.justice.gov.uk/magistrates/atcm/SearchResponseType" schemaLocation="DebtorProfileSearch/SearchResponseType.xsd" />
+		</xsd:schema>
+
+	</wsdl:types>
+	<wsdl:message name="iCreateFineAccountsRequest">
+		<wsdl:part name="iCreateFineAccountsRequest" element="atcm-cfareq:CreateFineAccountsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="iCreateFineAccountsResponse">
+		<wsdl:part name="iCreateFineAccountsResponse" element="atcm-cfares:CreateFineAccountsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="iSearchRequestType">
+		<wsdl:part name="iSearchRequestType" element="cpp-sreq:SearchRequestType"/>
+	</wsdl:message>
+		<wsdl:message name="iSearchResponseType">
+		<wsdl:part name="iSearchResponseType" element="cpp-sres:SearchResponseType"/>
+	</wsdl:message>
+
+	<wsdl:portType name="iCppGatewayType">
+		<wsdl:operation name="createFineAccounts">
+			<wsdl:input message="tns:iCreateFineAccountsRequest"/>
+			<wsdl:output message="tns:iCreateFineAccountsResponse"/>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchType">
+			<wsdl:input message="tns:iSearchRequestType"/>
+			<wsdl:output message="tns:iSearchResponseType"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="CppGatewayBinding" type="tns:iCppGatewayType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="createFineAccounts">
+			<soap:operation soapAction="createFineAccounts"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchType">
+			<soap:operation soapAction="searchType"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="CppGatewayService">
+		<wsdl:port name="CppGatewayPort" binding="tns:CppGatewayBinding">
+			<soap:address location="http://www.justice.gov.uk/magistrates"/>
+			<wswa:UsingAddressing xmlns:wswa="http://www.w3.org/2005/08/addressing/wsdl"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

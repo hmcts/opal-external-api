@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.justice.gov.uk/magistrates/atcm/CreatedFineAccount" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://www.justice.gov.uk/magistrates/atcm/CreatedFineAccount" elementFormDefault="unqualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+
+			CGI IT UK Limited. A CGI Group Inc. Company
+			Registered Office: 250 Brook Drive,
+			Green Park, Reading
+			RG2 6UA,
+			United Kingdom.
+
+			Registered in England and Wales - Number 947968
+
+			0.4 - DB - 19/10/2016 - Split CreatedFineAccount into seperate schema file
+											 Updated name of Case ID and UUID to CPP Case ID and CPP UUID
+											 Updated Case ID to 15 characters long
+			 0.6 - DB - 10/11/2016 - Reflects PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.12
+											 Removed Account Division code
+											 Renamed CPPCaseID to CPPID
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="CreatedFineAccount">
+		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation>Fine Response - parameters required to provide Fine information </xsd:documentation>
+			</xsd:annotation>
+			<xsd:sequence>
+				<xsd:element name="CPPID">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:maxLength value="12"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="CPPUUID">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:length value="36"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:choice>
+					<xsd:sequence>
+						<xsd:element name="AccountNumber">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="9"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+					<xsd:sequence>
+						<xsd:element name="ErrorCode">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="5"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="ErrorMessage">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:maxLength value="4000"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

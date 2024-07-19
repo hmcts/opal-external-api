@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse" xmlns:lg="http://www.justice.gov.uk/magistrates/atcm/CreatedFineAccount" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse" elementFormDefault="unqualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+
+			CGI IT UK Limited. A CGI Group Inc. Company 
+			Registered Office: 250 Brook Drive, 
+			Green Park, Reading 
+			RG2 6UA, 
+			United Kingdom. 
+			
+			Registered in England and Wales - Number 947968
+			
+			0.1 - DD - 22/08/2016 - Initial draft
+			0.2 - DB - 13/09/2016 - Updated to reflect PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.7DP
+			0.3 - DB - 21/09/2016 - Added ATCM UUID to reflect PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.11DP
+			0.4 - DB - 19/10/2016 - Added Error message element
+			0.6 - DB - 10/11/2016 - Reflects PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.12
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:import namespace="http://www.justice.gov.uk/magistrates/atcm/CreatedFineAccount" schemaLocation="CreatedFineAccount.xsd"/>
+	<!--======================-->
+	<!-- SIMPLE TYPES                    -->
+	<!--======================-->
+	<!-- No Global Simple Types defines -->
+	<!--======================-->
+	<!-- CASE REQUEST                 -->
+	<!--======================-->
+	<xsd:element name="CreateFineAccountsResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="lg:CreatedFineAccount" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="NumberOfFineAccounts" type="xsd:integer"/>
+				<xsd:element name="ErrorCode" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Contains code for any error messages that are caused by a problem with the request file.
+							 Any problems with individual account requests are returned in the relevant CreatedFineAccount element</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:maxLength value="5"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="ErrorMessage" type="xsd:string" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Contains any error messages that are caused by a problem with the request file.
+							 Any problems with individual account requests are returned in the relevant CreatedFineAccount element</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
