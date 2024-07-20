@@ -37,10 +37,10 @@ public class CreateFineAccountsService extends RestService{
             .build();
 
         OpalS2SResponseWrapper opalS2SResponseWrapper = postToEndpoint(OpalS2SResponseWrapper.class,
-                                                                                   opalS2SRequestWrapper,
-                                                                                   CREATE_FINE_ACCOUNTS_ENDPOINT +
-                                                                                       CREATE_FINE_ACCOUNTS_API
-                                                                                   );
+                                                                       opalS2SRequestWrapper,
+                                                                       CREATE_FINE_ACCOUNTS_ENDPOINT +
+                                                                           CREATE_FINE_ACCOUNTS_API
+        );
         if (opalS2SResponseWrapper.getErrorDetail() != null) {
             throw new RuntimeException(opalS2SResponseWrapper.getErrorDetail());
         }
@@ -49,4 +49,32 @@ public class CreateFineAccountsService extends RestService{
                                           CreateFineAccountsResponse.class);
 
     }
+
+    public CreateFineAccountsResponse handleCreateFineAccountsRequestStub(CreateFineAccountsRequest request) {
+
+        OpalS2SRequestWrapper opalS2SRequestWrapper = OpalS2SRequestWrapper.builder()
+            .externalApiPayload(XmlUtil.marshalXmlString(request, CreateFineAccountsRequest.class ))
+            .build();
+
+        OpalS2SResponseWrapper opalS2SResponseWrapper = OpalS2SResponseWrapper.builder()
+            .opalResponsePayload(stubResponsePayload).build();
+
+        if (opalS2SResponseWrapper.getErrorDetail() != null) {
+            throw new RuntimeException(opalS2SResponseWrapper.getErrorDetail());
+        }
+        //T
+        String opalResponsePayload = opalS2SResponseWrapper.getOpalResponsePayload();
+
+        return XmlUtil.unmarshalXmlString(opalS2SResponseWrapper.getOpalResponsePayload(),
+                                          CreateFineAccountsResponse.class);
+
+    }
+
+    private String stubResponsePayload = """
+                                            <CreateFineAccountsResponse xmlns="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse">
+                                                <NumberOfFineAccounts>0</NumberOfFineAccounts>
+                                                <ErrorCode>0</ErrorCode>
+                                                <ErrorMessage>Service Not Fully Implemented</ErrorMessage>
+                                            </CreateFineAccountsResponse>
+                                            """;
 }
