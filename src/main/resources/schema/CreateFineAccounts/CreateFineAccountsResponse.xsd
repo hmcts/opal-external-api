@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse" xmlns:lg="http://www.justice.gov.uk/magistrates/atcm/CreatedFineAccount" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse" elementFormDefault="unqualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+<xsd:schema xmlns="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:lg="http://www.justice.gov.uk/magistrates/atcm/CreatedFineAccount"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            targetNamespace="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse"
+            elementFormDefault="unqualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
 	<xsd:annotation>
 		<xsd:documentation xml:lang="en">
 
-			CGI IT UK Limited. A CGI Group Inc. Company 
-			Registered Office: 250 Brook Drive, 
-			Green Park, Reading 
-			RG2 6UA, 
-			United Kingdom. 
-			
+			CGI IT UK Limited. A CGI Group Inc. Company
+			Registered Office: 250 Brook Drive,
+			Green Park, Reading
+			RG2 6UA,
+			United Kingdom.
+
 			Registered in England and Wales - Number 947968
-			
+
 			0.1 - DD - 22/08/2016 - Initial draft
 			0.2 - DB - 13/09/2016 - Updated to reflect PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.7DP
 			0.3 - DB - 21/09/2016 - Added ATCM UUID to reflect PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.11DP
