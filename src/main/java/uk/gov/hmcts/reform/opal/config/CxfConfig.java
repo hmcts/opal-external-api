@@ -5,29 +5,33 @@ import jakarta.xml.ws.soap.SOAPBinding;
 import lombok.RequiredArgsConstructor;
 import org.apache.cxf.Bus;
 import org.apache.cxf.bus.spring.SpringBus;
+import org.apache.cxf.ext.logging.LoggingInInterceptor;
+import org.apache.cxf.ext.logging.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.gov.hmcts.reform.opal.controllers.CPPSoapController;
+import uk.gov.hmcts.reform.opal.controllers.CppSoapController;
 
 
 @Configuration
 @RequiredArgsConstructor
 public class CxfConfig {
 
-    private final CPPSoapController cppSoapController;
+    private final CppSoapController cppSoapController;
 
     private final WsSecurityConfig wsSecurityConfig;
 
     @Bean
-    public Endpoint cppEndpoint() {
+    public Endpoint cppEndpoint() throws Exception {
         EndpointImpl endpoint = new EndpointImpl(springBus(), cppSoapController);
         endpoint.setBindingUri(SOAPBinding.SOAP12HTTP_BINDING);
         endpoint.publish("/CppGatewayService");
         endpoint.getInInterceptors().add(wsSecurityConfig.cppWss4JInInterceptor());
         endpoint.getOutInterceptors().add(wsSecurityConfig.cppWss4JOutInterceptor());
+        endpoint.getInInterceptors().add(new LoggingInInterceptor());
+        endpoint.getOutInterceptors().add(new LoggingOutInterceptor());
         return endpoint;
     }
 
@@ -44,4 +48,3 @@ public class CxfConfig {
         return new SpringBus();
     }
 }
-
