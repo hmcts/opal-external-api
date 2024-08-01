@@ -13,13 +13,13 @@ import uk.gov.hmcts.reform.opal.util.XmlUtil;
 
 @Service
 @Slf4j(topic = "CreateFineAccountsService")
-public class CreateFineAccountsService extends RestService{
+public class CreateFineAccountsService extends RestService {
 
     @Value("${s2s.endpoints.opal-fines-service}")
-    private String CREATE_FINE_ACCOUNTS_ENDPOINT;
+    private String createFineAccountsEndpoint;
 
     @Value("${s2s.api.create-account}")
-    private String CREATE_FINE_ACCOUNTS_API;
+    private String createFineAccountsApi;
 
     public CreateFineAccountsService(RestClient restClient) {
         super(restClient);
@@ -32,49 +32,28 @@ public class CreateFineAccountsService extends RestService{
 
     public CreateFineAccountsResponse handleCreateFineAccountsRequest(CreateFineAccountsRequest request) {
 
+        log.info("Preparing request to create fine account(s)");
         OpalS2SRequestWrapper opalS2SRequestWrapper = OpalS2SRequestWrapper.builder()
-            .externalApiPayload(XmlUtil.marshalXmlString(request, CreateFineAccountsRequest.class ))
+            .externalApiPayload(XmlUtil.marshalXmlString(request, CreateFineAccountsRequest.class))
             .build();
+        log.info("Request prepared");
+        log.debug("Request: {}", opalS2SRequestWrapper.getExternalApiPayload());
 
+        log.info("Calling back-end service to create fine account(s)");
         OpalS2SResponseWrapper opalS2SResponseWrapper = postToEndpoint(OpalS2SResponseWrapper.class,
                                                                        opalS2SRequestWrapper,
-                                                                       CREATE_FINE_ACCOUNTS_ENDPOINT +
-                                                                           CREATE_FINE_ACCOUNTS_API
+                                                                       createFineAccountsEndpoint +
+                                                                           createFineAccountsApi
         );
         if (opalS2SResponseWrapper.getErrorDetail() != null) {
+            log.error("Error response from back-end service: {}", opalS2SResponseWrapper.getErrorDetail());
             throw new RuntimeException(opalS2SResponseWrapper.getErrorDetail());
         }
 
+        log.info("Successful response received from back-end service");
+        log.debug("Response: {}", opalS2SResponseWrapper.getOpalResponsePayload());
         return XmlUtil.unmarshalXmlString(opalS2SResponseWrapper.getOpalResponsePayload(),
                                           CreateFineAccountsResponse.class);
 
     }
-
-    public CreateFineAccountsResponse handleCreateFineAccountsRequestStub(CreateFineAccountsRequest request) {
-
-        OpalS2SRequestWrapper opalS2SRequestWrapper = OpalS2SRequestWrapper.builder()
-            .externalApiPayload(XmlUtil.marshalXmlString(request, CreateFineAccountsRequest.class ))
-            .build();
-
-        OpalS2SResponseWrapper opalS2SResponseWrapper = OpalS2SResponseWrapper.builder()
-            .opalResponsePayload(stubResponsePayload).build();
-
-        if (opalS2SResponseWrapper.getErrorDetail() != null) {
-            throw new RuntimeException(opalS2SResponseWrapper.getErrorDetail());
-        }
-        //T
-        String opalResponsePayload = opalS2SResponseWrapper.getOpalResponsePayload();
-
-        return XmlUtil.unmarshalXmlString(opalS2SResponseWrapper.getOpalResponsePayload(),
-                                          CreateFineAccountsResponse.class);
-
-    }
-
-    private String stubResponsePayload = """
-                                            <CreateFineAccountsResponse xmlns="http://www.justice.gov.uk/magistrates/atcm/CreateFineAccountsResponse">
-                                                <NumberOfFineAccounts>0</NumberOfFineAccounts>
-                                                <ErrorCode>0</ErrorCode>
-                                                <ErrorMessage>Service Not Fully Implemented</ErrorMessage>
-                                            </CreateFineAccountsResponse>
-                                            """;
 }
