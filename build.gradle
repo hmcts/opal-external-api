@@ -105,14 +105,34 @@ task smoke(type: Test) {
   testClassesDirs = sourceSets.smokeTest.output.classesDirs
   classpath = sourceSets.smokeTest.runtimeClasspath
 }
+def coverageExclusions = [
+  '**/uk/gov/hmcts/reform/opal/CPPSoapGateway/**',
+  '**/uk/gov/hmcts/reform/opal/**/config/**',
+  '**/uk/gov/hmcts/reform/opal/**/exception/**'
+]
 
 jacocoTestReport {
   executionData(test, integration)
   reports {
     xml.required = true
-    csv.required = false
     html.required = true
+    csv.required = false
+    html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
   }
+  afterEvaluate {
+    classDirectories.setFrom(files(classDirectories.files.collect {
+      fileTree(dir: it, exclude: jacocoExclusionArray(coverageExclusions)
+      )
+    }))
+  }
+}
+
+static String[] jacocoExclusionArray(ArrayList<String> exclusions) {
+  final def lst = new ArrayList<String>()
+
+  exclusions.stream().forEach { it.endsWith(".java") ? lst.add(it.replace(".java", ".class")) : lst.add(it) }
+
+  return lst.toArray()
 }
 
 project.tasks['sonarqube'].dependsOn jacocoTestReport
@@ -184,6 +204,7 @@ dependencies {
   implementation 'org.apache.cxf:cxf-rt-transports-http:4.0.4'
   implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.0.4'
   implementation 'org.apache.cxf:cxf-rt-ws-security:4.0.4'
+  implementation 'org.apache.cxf:cxf-rt-features-logging:4.0.4'
   implementation 'org.opensaml:opensaml-saml-impl:4.3.0'
   implementation 'org.opensaml:opensaml-xacml-impl:4.3.0'
   implementation 'org.opensaml:opensaml-xacml-saml-impl:4.3.0'
@@ -234,6 +255,7 @@ def allWsdl = task allWsdl {
 
       String wsdl = "${projectDir}/src/main/resources/schema/${name}.wsdl"
       String genSrcDir = "${projectDir}/src-gen/main/java/wsdl-xsd"
+      String bindingFile = "${projectDir}/src/main/resources/schema/jaxb-bindings.xml"
 
       inputs.file wsdl
       outputs.dir genSrcDir
@@ -241,7 +263,7 @@ def allWsdl = task allWsdl {
       classpath configurations.wsdl2java
       main "org.apache.cxf.tools.wsdlto.WSDLToJava"
 
-      args '-client', '-impl', '-exsh', 'true', '-noAddressBinding', '-autoNameResolution', "-wsdlLocation", "classpath:schema/${name}.wsdl", '-p', "uk.gov.hmcts.reform.opal.${name}", '-encoding', 'UTF-8', '-d', genSrcDir, wsdl
+      args '-client', '-impl', '-exsh', 'true', '-noAddressBinding', '-autoNameResolution', "-wsdlLocation", "classpath:schema/${name}.wsdl", '-p', "uk.gov.hmcts.reform.opal.${name}", '-encoding', 'UTF-8', '-d', genSrcDir, '-b', bindingFile, wsdl
 
       final OutputStream baos = new ByteArrayOutputStream()
       errorOutput = new OutputStream() {
