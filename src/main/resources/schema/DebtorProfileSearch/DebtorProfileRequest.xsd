@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.justice.gov.uk/magistrates/atcm/DebtorProfileRequest"
+	xmlns:lgsr="http://www.justice.gov.uk/magistrates/atcm/SearchRequestType"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	targetNamespace="http://www.justice.gov.uk/magistrates/atcm/DebtorProfileRequest"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	vc:minVersion="1.1">
+
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+
+			CGI IT UK Limited. A CGI
+			Group Inc. Company
+			Registered Office: 250 Brook Drive,
+			Green Park,
+			Reading
+			RG2 6UA,
+			United Kingdom.
+
+			Registered in England and Wales -
+			Number 947968
+
+			0.1 - DW - 16/01/2020 - Initial Draft
+			0.2 - DW - 11/02/2020 - Update element within SearchMetadataType to nillable
+			0.3 - TR - 27/03/2020 - move SearchMetadataType to a common schema
+
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:import
+		namespace="http://www.justice.gov.uk/magistrates/atcm/SearchRequestType"
+		schemaLocation="SearchRequestType.xsd" />
+	<xsd:simpleType name="ASCIIString">
+		<xsd:annotation>
+			<xsd:documentation>A single byte ASCII string that cannot be empty
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[&#x9;-&#x7F;]+" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="DebtorProfileSearch">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Count" nillable="false" minOccurs="0"
+					maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element ref="lgsr:SearchRequestType" minOccurs="1"
+					maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>

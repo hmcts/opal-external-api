@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.justice.gov.uk/magistrates/atcm/FineAccount" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" targetNamespace="http://www.justice.gov.uk/magistrates/atcm/FineAccount" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+
+			CGI IT UK Limited. A CGI Group Inc. Company 
+			Registered Office: 250 Brook Drive, 
+			Green Park, Reading 
+			RG2 6UA, 
+			United Kingdom. 
+			
+			Registered in England and Wales - Number 947968
+			
+			0.4 - DB - 19/10/2016 - Split Fine account elements into this seperate schema. 
+											  Added Alias Initials
+											Reflects PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.11DP
+			0.5 - DB - 20/10/2016 - Updated all standard string fields so they are restricted to Single Byte ASCII characters 
+											  Added Defendant Initials
+											  Removed FFR Imposition Code from enumeration
+			0.6 - DB - 10/11/2016 - Reflects PD.4687 Data Requirements for ATCM to Libra GOB Interface v0.12
+											  Changed CPPCaseID to CPPID
+											  Changed structure of Account Notes
+											  Changed structure of Defendant Aliases
+											  Changed length of CPPUUID
+											  Updated Telephone Regular Expression
+											  Updated Imposition Result Code with new enum
+											  Added sequence number attibutes for minor creditors and account notes		
+			0.7 - DB - 24/11/2016 - Removed Offence Serial Number from Imposition
+											  Added sequenceNumber attribute to Imposition
+											  Changed Bank Sort Code to Positive Integer exactly 6 characters long
+											  Changed Bank Account Number to Positive Integer
+			0.7a- DB - 20/01/2017 - Change maximum length of Employer Telephone Number to 20 characters
+											  Changed Parent Guardian To Pay field to be optional											 
+			0.8 - DW - 29/10/2019 - Introduce PaymentCardRequest element into PaymentTermsType
+			0.9 - DW - 12/11/2019 - Correct typo in Installment to Instalment
+			1.0 - DW - 01/09/2020 - Introduce ProsecutorCaseReference into FineAccount
+			1.1 - DW - 04/09/2020 - Introduce additional enumeration for LastEnforcementAction
+			1.2 - DW - 25/09/2020 - Changes to enumeration for LastEnforcementAction
+			1.3 - DW - 14/10/2020 - Change ProsecutorCaseReference to minOccurs 0
+			1.4 - DW - 16/06/2021 - update ProsecutorCaseReference to maxLength 30
+			
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="ASCIIString">
+		<xsd:annotation>
+			<xsd:documentation>A single byte ASCII string that cannot be empty</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[&#x9;-&#x7F;]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="FineAccount">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="CPPID">
+					<xsd:simpleType>
+						<xsd:restriction base="ASCIIString">
+							<xsd:maxLength value="12"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="CPPUUID">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:length value="36"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="AccDivisionCode">
+					<xsd:simpleType>
+						<xsd:restriction base="ASCIIString">
+							<xsd:maxLength value="3"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="ProsecutorCaseReference" minOccurs="0" maxOccurs="1" >	
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:maxLength value="30"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="Defendant" type="DefendantEntityType"/>
+				<xsd:element name="Imposition" type="LibraImpositionType" minOccurs="1" maxOccurs="unbounded"/>
+				<xsd:element name="ParentGuardian" type="ParentGuardianType" minOccurs="0" maxOccurs="1"/>
+				<xsd:element name="PaymentTerms" type="LibraPaymentTermsType"/>
+				<xsd:element name="MinorCreditor" type="MinorCreditorType" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="AccountNote" type="LibraAccountNotesType" minOccurs="1" maxOccurs="unbounded"/>
+				<xsd:element name="Employer" type="EmployerType" minOccurs="0" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--==============================-->
+	<!-- PERSON ENTITY INFORMATION           -->
+	<!--==============================-->
+	<xsd:complexType name="DefendantEntityType">
+		<xsd:annotation>
+			<xsd:documentation>Defendant Entity Type - Elements that make up a person or company's details</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Title">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Mr"/>
+						<xsd:enumeration value="Mrs"/>
+						<xsd:enumeration value="Ms"/>
+						<xsd:enumeration value="Miss"/>
+						<xsd:enumeration value="Co"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="Surname">
+						<xsd:simpleType>
+							<xsd:restriction base="ASCIIString">
+								<xsd:maxLength value="30"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Forenames">
+						<xsd:simpleType>
+							<xsd:restriction base="ASCIIString">
+								<xsd:maxLength value="20"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="Initials">
+						<xsd:simpleType>
+							<xsd:restriction base="ASCIIString">
+								<xsd:maxLength value="2"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="DOB" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>YYYY-MM-DD</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:date"/>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:element name="CompanyName" maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="ASCIIString">
+							<xsd:maxLength value="50"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="Age" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:totalDigits value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Address">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="80"/>
+						<xsd:pattern value="[^*]{1,30}\*[^*]{0,30}\*[^*]{0,16}\*\*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Postcode" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="8"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Alias" type="AliasType" minOccurs="0" maxOccurs="5"/>
+			<xsd:element name="NationalInsuranceNumber" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="9"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="TelephoneNumberHome" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="35"/>
+						<xsd:pattern value="[\d -]*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="TelephoneNumberBusiness" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="35"/>
+						<xsd:pattern value="[\d -]*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="TelephoneNumberMobile" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="35"/>
+						<xsd:pattern value="[\d -]*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmailAddress1" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="76"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmailAddress2" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="76"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="VehicleMake" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="VehicleRegistrationMark" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="11"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="DocumentLanguage" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value=""/>
+						<xsd:enumeration value="W"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="HearingLanguage" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value=""/>
+						<xsd:enumeration value="W"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="DateOfSentence">
+				<xsd:annotation>
+					<xsd:documentation>YYYY-MM-DD</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:date"/>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ImposingCourt" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>From local justice area data - use code only</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EnforcingCourt">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="CollectionOrderMade">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Y"/>
+						<xsd:enumeration value="N"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="LastEnforcementAction" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="ABDC"/>
+						<xsd:enumeration value="AEO"/>
+						<xsd:enumeration value="AEOC"/>
+						<xsd:enumeration value="CLAMPO"/>
+						<xsd:enumeration value="COLLO"/>
+						<xsd:enumeration value="HTT"/>
+						<xsd:enumeration value="INTL"/>
+						<xsd:enumeration value="MPSO"/>
+						<xsd:enumeration value="NAP"/>
+						<xsd:enumeration value="NOENF"/>
+						<xsd:enumeration value="PRIS"/>
+						<xsd:enumeration value="REM"/>
+						<xsd:enumeration value="UPWO"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AccountComment" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=============================-->
+	<!--ALIAS INFORMATION          -->
+	<!--=============================-->
+	<xsd:complexType name="AliasType">
+		<xsd:sequence>
+			<xsd:element name="AliasForenames" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AliasInitials" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AliasSurname" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=============================-->
+	<!-- IMPOSITIONS  INFORMATION            -->
+	<!--=============================-->
+	<xsd:complexType name="LibraImpositionType">
+		<xsd:annotation>
+			<xsd:documentation>Libra Impositions Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OffenceCode">
+				<xsd:annotation>
+					<xsd:documentation>CJS Offence Code</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="8"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ImpositionResultCode">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="FO"/>
+						<xsd:enumeration value="FCPC"/>
+						<xsd:enumeration value="FVS"/>
+						<xsd:enumeration value="FVEBD"/>
+						<xsd:enumeration value="FCOST"/>
+						<xsd:enumeration value="FCOMP"/>
+						<xsd:enumeration value="FCC"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ImpositionAmount">
+				<xsd:annotation>
+					<xsd:documentation>Total Sum to be Paid in Pounds and Pence example 154.50</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:decimal">
+						<xsd:minInclusive value="0"/>
+						<xsd:fractionDigits value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="MajorCreditorCode">
+					<xsd:annotation>
+						<xsd:documentation>Major Creditor reference type abbreviation code</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="ASCIIString">
+							<xsd:maxLength value="4"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="MinorCreditorSequenceNumber">
+					<xsd:simpleType>
+						<xsd:annotation>
+							<xsd:documentation>This should match the Sequence Number attribute of the relevant Minor Creditor element</xsd:documentation>
+						</xsd:annotation>
+						<xsd:restriction base="xsd:positiveInteger">
+							<xsd:totalDigits value="3"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="sequenceNumber" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Controls the order of the Minor Creditors numbers. Starts at 1</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:positiveInteger">
+					<xsd:totalDigits value="3"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--================================-->
+	<!-- MINOR CREDITOR                                   -->
+	<!--================================-->
+	<xsd:complexType name="MinorCreditorType">
+		<xsd:sequence>
+			<xsd:element name="MinorCreditorTitle">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Mr"/>
+						<xsd:enumeration value="Mrs"/>
+						<xsd:enumeration value="Ms"/>
+						<xsd:enumeration value="Miss"/>
+						<xsd:enumeration value="Co"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:sequence>
+					<xsd:element name="MinorCreditorSurname">
+						<xsd:simpleType>
+							<xsd:restriction base="ASCIIString">
+								<xsd:maxLength value="30"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="MinorCreditorInitials">
+						<xsd:simpleType>
+							<xsd:restriction base="ASCIIString">
+								<xsd:maxLength value="2"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+					<xsd:element name="MinorCreditorForenames">
+						<xsd:simpleType>
+							<xsd:restriction base="ASCIIString">
+								<xsd:maxLength value="20"/>
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:element>
+				</xsd:sequence>
+				<xsd:element name="CompanyName">
+					<xsd:simpleType>
+						<xsd:restriction base="ASCIIString">
+							<xsd:maxLength value="50"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="MinorCreditorAddress" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="80"/>
+						<xsd:pattern value="[^*]{1,30}\*[^*]{0,30}\*[^*]{0,16}\*\*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="MinorCreditorPostcode" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="8"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="MinorCreditorPayByBACS">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Y"/>
+						<xsd:enumeration value="N"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BankAccountType" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:totalDigits value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BankSortCode" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:totalDigits value="6"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BankAccountNumber" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:nonNegativeInteger">
+						<xsd:totalDigits value="8"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AccountName" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="BankAccountReference" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="18"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sequenceNumber" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Controls the order of the Minor Creditors numbers. Starts at 1</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:positiveInteger">
+					<xsd:totalDigits value="3"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--================================-->
+	<!-- PAYMENT TERMS INFORMATION            -->
+	<!--================================-->
+	<xsd:complexType name="LibraPaymentTermsType">
+		<xsd:annotation>
+			<xsd:documentation>Libra Payment Terms Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PaymentTermsType">
+				<xsd:annotation>
+					<xsd:documentation>From Reference data - use code only</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="BD"/>
+						<xsd:enumeration value="WK"/>
+						<xsd:enumeration value="FN"/>
+						<xsd:enumeration value="MO"/>
+						<xsd:enumeration value="WL"/>
+						<xsd:enumeration value="FL"/>
+						<xsd:enumeration value="ML"/>
+						<xsd:enumeration value="PD"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="PayByDate" type="PayByDateType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="LumpSumAmount" type="LumpSumAmountType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Instalments" type="InstalmentType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="DefaultDaysInJail" type="xsd:nonNegativeInteger"/>
+			<xsd:element name="ParentGuardianToPay" type="ParentGuardianToPayType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="PayByDateType">
+		<xsd:annotation>
+			<xsd:documentation>Pay by Date example is YYYY-MM-DD I.e. 2015-07-18</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LumpSumAmountType">
+		<xsd:annotation>
+			<xsd:documentation>Total Sum to be Paid in Pounds and Pence example 154.50</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ParentGuardianToPayType">
+		<xsd:annotation>
+			<xsd:documentation>Parent/Guardian will pay when set to Y is Yes</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value=""/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--=================================-->
+	<!-- INSTALMENTS DATA         -->
+	<!--=================================-->
+	<xsd:complexType name="InstalmentType">
+		<xsd:annotation>
+			<xsd:documentation>Instalments and Payment Cards</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="InstalmentAmount" minOccurs="1" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:annotation>
+						<xsd:documentation>Agreed Instalment to be paid in pounds and pence example 12.50</xsd:documentation>
+					</xsd:annotation>
+					<xsd:restriction base="xsd:decimal">
+						<xsd:minInclusive value="0"/>
+						<xsd:fractionDigits value="2"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="InstalmentStartDate" minOccurs="1" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:annotation>
+						<xsd:documentation>Agreed Instalment to be paid in pounds and pence example 12.50</xsd:documentation>
+					</xsd:annotation>
+					<xsd:restriction base="xsd:date"/>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="PaymentCardRequest" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Where a payment card is requested for issue</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Y"/>
+						<xsd:enumeration value="N"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--=================================-->
+	<!-- PARENT GUARDIAN  INFORMATION         -->
+	<!--=================================-->
+	<xsd:complexType name="ParentGuardianType">
+		<xsd:annotation>
+			<xsd:documentation>Libra ParentGuardianType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Name">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="30"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Address">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="76"/>
+						<xsd:pattern value="[^*]{1,25}\*[^*]{0,25}\*[^*]{0,22}\*\*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--===================-->
+	<!-- ACCOUNT NOTES         -->
+	<!--===================-->
+	<xsd:complexType name="LibraAccountNotesType">
+		<xsd:annotation>
+			<xsd:documentation>AccountNotesType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="AccountNoteText">
+				<xsd:annotation>
+					<xsd:documentation>Note Line </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="28"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="sequenceNumber" use="required">
+			<xsd:annotation>
+				<xsd:documentation>Controls the order of the account numbers. Starts at 1</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:positiveInteger">
+					<xsd:totalDigits value="3"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!--===================-->
+	<!--EMPLOYER        -->
+	<!--===================-->
+	<xsd:complexType name="EmployerType">
+		<xsd:annotation>
+			<xsd:documentation>EmployerType </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="EmployerReference">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="20"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerCompanyName">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="35"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerAddressLine1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="32"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerAddressLine2" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="32"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerAddressLine3" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="32"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerAddressLine4" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="32"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerAddressLine5" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="32"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerPostCode" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="8"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerTelephoneNumber" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:maxLength value="20"/>
+						<xsd:pattern value="[\d -]*"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EmployerEmailAddress" minOccurs="0" maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="ASCIIString">
+						<xsd:maxLength value="76"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

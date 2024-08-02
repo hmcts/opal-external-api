@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns="http://www.justice.gov.uk/magistrates/atcm/SearchRequestType" 
+xmlns:lgsm="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType"
+xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+targetNamespace="http://www.justice.gov.uk/magistrates/atcm/SearchRequestType" 
+elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+
+			CGI IT UK Limited. A CGI Group Inc. Company 
+			Registered Office: 14th Floor, 20 Fenchurch Street, 
+			London
+			EC3M 3BY, 
+			United Kingdom. 
+
+			Registered in England and Wales - Number 947968
+
+			0.1 - TR - 27/03/2020 - Initial Draft
+			0.2 - DW - 03/04/2020 - Update Surname to minLength 1
+									update Forename1 to minLength 1
+			0.3 - TR - 08/04/2020 - move SearchMetaDataType into a common schema
+									OrganisationName min length changed from 2 to 1 
+			0.4 - DW - 09/04/2020 - update Forename1 to Forenames and minOccurs 1
+									remove Forename2
+			1.0 - DW - 20/04/2020 - Issued as Final
+			1.1 - DW - 01/09/2020 - change maxOccurs for Defendant to 1
+							
+
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:import namespace="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType" schemaLocation="SearchMetadataType.xsd"/>
+
+
+    <!--=============================-->
+	<!--SEARCH REQUEST         -->
+	<!--=============================-->
+	<xsd:element name="SearchRequestType">
+	<xsd:complexType >
+		<xsd:sequence>
+			<xsd:element ref="lgsm:SearchMetadataType"/>
+			<xsd:element name="Defendant" type="DefendantType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	</xsd:element>
+	
+	
+	<!--==============================-->
+	<!-- DEFENDANT         -->
+	<!--==============================-->
+	<xsd:complexType name="DefendantType">
+		<xsd:annotation>
+			<xsd:documentation>Defendant details for search request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+				<xsd:element name="PartyType" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>If the defenandt is a person or organistaion</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="P"/>
+							<xsd:enumeration value="O"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			<xsd:choice>
+				<xsd:element name="Person" type="PersonType"/>
+				<xsd:element name="OrganisationName" minOccurs="1" maxOccurs="1"> 
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!--==============================-->
+	<!-- PERSON         -->
+	<!--==============================-->
+	<xsd:complexType name="PersonType">
+		<xsd:annotation>
+			<xsd:documentation>Person details for search request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Surname" minOccurs="1" maxOccurs="1"> 
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+			</xsd:element>	
+			<xsd:element name="Forenames" minOccurs="1" maxOccurs="1"> 
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+			</xsd:element>	
+			<xsd:element name="DateOfBirth" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>YYYY-MM-DD</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:date"/>
+					</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="NationalInsuranceNumber" minOccurs="0" maxOccurs="1"> 
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string"/>
+					</xsd:simpleType>
+			</xsd:element>			
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

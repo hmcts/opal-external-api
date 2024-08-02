@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.justice.gov.uk/magistrates/atcm/DebtorProfileResponse"
+	xmlns:lgsr="http://www.justice.gov.uk/magistrates/atcm/SearchResponseType"
+	xmlns:lgsm="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType"
+	xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+	targetNamespace="http://www.justice.gov.uk/magistrates/atcm/DebtorProfileResponse"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	vc:minVersion="1.1">
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+
+			CGI IT UK Limited. A CGI
+			Group Inc. Company
+			Registered Office: 14th Floor, 20 Fenchurch Street,
+			London
+			EC3M 3BY,
+			United Kingdom.
+
+			Registered in England and Wales - Number 947968
+
+			0.1 - DW - 03/02/2020 - Initial Draft
+			0.2 - DW - 11/02/2020 - Introduce DebtorName, Forename1-3,Surname, DOB into AccountType
+			                        Update SearchMetadataType element to nillable
+			                        Update AccountType elements to nillable
+			                        Introduce enumeration for CollectionOrderMade, MasterAccount,
+			                        ParentGuardianFlag
+			                        Update DOB to date
+			0.3 - DW - 12/03/2020 - Introduce Priority element into SearchMetadataType
+			                        Introduced UnprocessedRequests element
+			0.4 - TR - 27/03/2020 - move SearchResponseType into common schema
+			0.5 - TR - 08/04/2020 - move SearchMetaDataType into common schema
+
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:import
+		namespace="http://www.justice.gov.uk/magistrates/atcm/SearchResponseType"
+		schemaLocation="SearchResponseType.xsd" />
+	<xsd:import
+		namespace="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType"
+		schemaLocation="SearchMetadataType.xsd" />
+
+	<xsd:simpleType name="ASCIIString">
+		<xsd:annotation>
+			<xsd:documentation>A single byte ASCII string that cannot be empty
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[&#x9;-&#x7F;]+" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+
+	<xsd:element name="DebtorProfileResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="lgsr:SearchResponseType" minOccurs="0"
+					maxOccurs="unbounded" />
+
+				<xsd:element name="UnprocessedRequests"
+					type="UnprocessedRequestsType" minOccurs="0" maxOccurs="unbounded" />
+
+				<xsd:element name="ErrorCode" minOccurs="0">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:maxLength value="5" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="ErrorMessage" type="xsd:string"
+					minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+
+	<!--============================= -->
+	<!--UNPROCESSED REQUEST -->
+	<!--============================= -->
+	<xsd:complexType name="UnprocessedRequestsType">
+		<xsd:sequence>
+			<xsd:element ref="lgsm:SearchMetadataType" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+</xsd:schema>

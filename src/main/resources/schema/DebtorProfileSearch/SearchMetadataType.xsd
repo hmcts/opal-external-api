@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+xmlns="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType" 
+xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" 
+targetNamespace="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType" 
+elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+
+			CGI IT UK Limited. A CGI Group Inc. Company 
+			Registered Office: 14th Floor, 20 Fenchurch Street, 
+			London
+			EC3M 3BY, 
+			United Kingdom. 
+
+			Registered in England and Wales - Number 947968
+
+			0.1 - TR - 08/04/2020 - Initial Draft
+			
+
+		</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:element name="SearchMetadataType">
+	<xsd:complexType >
+		<xsd:annotation>
+			<xsd:documentation>Metadata relating to a defendant search request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+				<xsd:element name="SequenceNumber" nillable="false"  minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="CPPDefendantID" nillable="true" minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="CPPCaseID" nillable="true" minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="CourtOUCode" nillable="true" minOccurs="1" maxOccurs="1">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:length value="7"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>			
+					<xsd:element name="DateOfHearing" nillable="true" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>YYYY-MM-DD</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:date"/>
+						</xsd:simpleType>
+					</xsd:element>		
+					<xsd:element name="TimeOfHearing" nillable="true" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>HH:MM</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:time"/>
+						</xsd:simpleType>
+					</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	</xsd:element>
+	
+	
+	
+</xsd:schema>
