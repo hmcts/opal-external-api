@@ -93,6 +93,24 @@ class RestServiceTest extends RestServiceTestsBase {
         assertEquals("Received an empty body in the response from the rest endpoint", exception.getMessage());
     }
 
+    @Test
+    void extractResponse_shouldThrowException_whenJsonIsNotDeserializable() {
+        // Arrange
+        ResponseEntity<String> responseEntity = new ResponseEntity<>(getJsonResponse(), HttpStatus.OK);
+        Class<OpalS2SResponseWrapper> responseType = OpalS2SResponseWrapper.class;
+
+        jsonUtilMock.when(() -> JsonUtil.convertJsonToObject(getJsonResponse(), responseType))
+            .thenThrow(new RuntimeException("Error deserializing response"));
+
+        // Act & Assert
+        RestServiceResponseException exception = assertThrows(RestServiceResponseException.class, () ->
+            restService.extractResponse(responseEntity, OpalS2SResponseWrapper.class)
+        );
+
+        // Assert
+        assertEquals("java.lang.RuntimeException: Error deserializing response", exception.getMessage());
+    }
+
     String getJsonResponse() {
         return "{\"opalResponsePayload\":null,\"errorDetail\":\"ERROR IN DATABASE\"}";
     }

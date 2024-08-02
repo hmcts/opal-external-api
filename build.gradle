@@ -107,8 +107,9 @@ task smoke(type: Test) {
 }
 def coverageExclusions = [
   '**/uk/gov/hmcts/reform/opal/CPPSoapGateway/**',
-  '**/uk/gov/hmcts/reform/opal/**/config/**',
-  '**/uk/gov/hmcts/reform/opal/**/exception/**'
+  '**/uk/gov/hmcts/reform/opal/config/**',
+  '**/uk/gov/hmcts/reform/opal/exception/**',
+  '**/uk/gov/hmcts/reform/opal/util/**'
 ]
 
 jacocoTestReport {
