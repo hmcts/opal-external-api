@@ -56,7 +56,8 @@ s2s:
     opal-fines-service: ${OPAL_FINES_S2S_URL:http://localhost:4553/opal}
     opal-maintenance-service: ${OPAL_MAINTENANCE_S2S_URL:http://localhost:4554/opal}
   api:
-    create-account: ${OPAL_S2S_CREATE_ACCOUNT_API:/api/createAccount}
+    create-account: ${OPAL_S2S_CREATE_ACCOUNT_API:/api/create-fine-accounts}
+    debtor-profile: ${OPAL_S2S_DEBTOR_PROFILE_API:/api/debtor-profile-search}
 
 soap:
   keystore:
