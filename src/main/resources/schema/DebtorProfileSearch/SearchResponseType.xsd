@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://www.justice.gov.uk/magistrates/atcm/SearchResponseType"
+            xmlns:lgsm="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            targetNamespace="http://www.justice.gov.uk/magistrates/atcm/SearchResponseType"
+            elementFormDefault="qualified" attributeFormDefault="unqualified"
+            vc:minVersion="1.1">
+
+    <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+
+            CGI IT UK Limited. A CGI
+            Group Inc. Company
+            Registered Office: 14th Floor, 20 Fenchurch Street,
+            London
+            EC3M 3BY,
+            United Kingdom.
+
+            Registered in England and Wales -
+            Number 947968
+
+            0.1 - TR - 27/03/2020 - Initial	Draft
+            0.2 - DW - 03/04/2020 - removed duplicate AccountNumber element
+            0.3 - TR - 08/04/2020 - moved to common SearchMetadataType
+            0.4 - DW - 09/04/2020 - update Forename1 to Forenames
+            update DebtorName to OrganisationName
+            remove Forename2 and Forename3
+            0.5 - DW - 20/04/2020 - Introduce NationalInsuranceNumber to AccountType
+            1.0 - DW - 20/04/2020 - Issued as Final
+            1.1 - DW - 24/04/2020 - Introduce ProsecutorCaseReference into AccountType
+            1.2 - CP - 06/08/2020 - Adding data type to element OrganisationName , Forenames , Surname ,
+            AccountNumber ,AddressLine (1,2,3) , Postcode , BalanceOutstanding ,
+            LastEnforcementAction , OriginatingCT , DaysInDefault ,AmountPaid , AmountImposed,
+            PaymentTerms and ProsecutorCaseReference 
+
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:import
+            namespace="http://www.justice.gov.uk/magistrates/atcm/SearchMetadataType"
+            schemaLocation="SearchMetadataType.xsd" />
+    <!--============================= -->
+    <!--SEARCH RESPONSE -->
+    <!--============================= -->
+    <xsd:element name="SearchResponseType">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="lgsm:SearchMetadataType" />
+                <xsd:choice>
+                    <xsd:element name="AccountMatch"
+                                 type="AccountMatchType" minOccurs="1" maxOccurs="unbounded" />
+                    <xsd:sequence>
+                        <xsd:element name="ErrorCode">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:maxLength value="5" />
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="ErrorMessage">
+                            <xsd:simpleType>
+                                <xsd:restriction base="xsd:string">
+                                    <xsd:maxLength value="4000" />
+                                </xsd:restriction>
+                            </xsd:simpleType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+
+    <!--============================== -->
+    <!-- ACCOUNT MATCHES -->
+    <!--============================== -->
+    <xsd:complexType name="AccountMatchType">
+        <xsd:annotation>
+            <xsd:documentation>Accounts matching the defendant search request
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="Matches">
+                <xsd:complexType>
+                    <xsd:choice>
+                        <xsd:element name="NoMatches" minOccurs="1"
+                                     maxOccurs="1" />
+                        <xsd:element name="Account" type="AccountType"
+                                     minOccurs="1" maxOccurs="unbounded" />
+
+                    </xsd:choice>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <!--============================== -->
+    <!-- ACCOUNT -->
+    <!--============================== -->
+    <xsd:complexType name="AccountType">
+        <xsd:annotation>
+            <xsd:documentation>Account details for search request
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+
+            <xsd:element name="OrganisationName" nillable="true" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="Forenames" nillable="true" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="Surname" nillable="true" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="DOB" nillable="true" minOccurs="1"
+                         maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>YYYY-MM-DD</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:date" />
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="NationalInsuranceNumber" nillable="true" minOccurs="1" maxOccurs="1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="AccountNumber" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="AddressLine1" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="AddressLine2" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="AddressLine3" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="Postcode" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="LastEnforcementAction" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="BalanceOutstanding" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="CollectionOrderMade" nillable="true"
+                         minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Y if the account is subject to a colection
+                        order, otherwise N
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="Y" />
+                        <xsd:enumeration value="N" />
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="PaymentTerms" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="AmountImposed" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="AmountPaid" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="DaysInDefault" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string"/>
+            <xsd:element name="MasterAccount" nillable="true"
+                         minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>Y if the account has been used as a master for
+                        consolidation, otherwise N
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="Y" />
+                        <xsd:enumeration value="N" />
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="OriginatingCT" nillable="true"
+                         minOccurs="1" maxOccurs="1" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>The GoB MET CT Code where the account is held
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ParentGuardianFlag" nillable="true"
+                         minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>If the account is to be paid by a Parent or
+                        Guardian
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="Y" />
+                        <xsd:enumeration value="N" />
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="ProsecutorCaseReference" nillable="true"
+                         minOccurs="1" maxOccurs="1" >
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string"/>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+</xsd:schema>
