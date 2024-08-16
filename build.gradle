@@ -211,7 +211,7 @@ dependencies {
   implementation 'org.opensaml:opensaml-saml-impl:4.3.0'
   implementation 'org.opensaml:opensaml-xacml-impl:4.3.0'
   implementation 'org.opensaml:opensaml-xacml-saml-impl:4.3.0'
-
+  implementation 'com.github.hmcts:service-auth-provider-java-client:5.2.0'
   compileOnly 'org.projectlombok:lombok:1.18.34'
   annotationProcessor 'org.projectlombok:lombok:1.18.34'
   testCompileOnly 'org.projectlombok:lombok:1.18.34'
