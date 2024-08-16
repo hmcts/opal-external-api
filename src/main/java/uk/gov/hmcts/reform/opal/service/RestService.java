@@ -13,6 +13,7 @@ import uk.gov.hmcts.reform.opal.util.JsonUtil;
 @Component
 @RequiredArgsConstructor
 public abstract class RestService {
+    public static final String SERVICE_AUTHORIZATION = "ServiceAuthorization";
 
     protected final RestClient restClient;
 
@@ -49,12 +50,13 @@ public abstract class RestService {
         }
     }
 
-    public <T> T postToEndpoint(Class<T> responseType, Object request, String url) {
+    public <T> T postToEndpoint(Class<T> responseType, Object request, String url, String authToken) {
         getLog().info("postToEndpoint: POST to endpoint: {}", url);
 
         ResponseEntity<String> responseEntity = restClient.post()
             .uri(url)
             .contentType(MediaType.APPLICATION_JSON)
+            .header(SERVICE_AUTHORIZATION, authToken)
             .body(request)
             .retrieve()
             .toEntity(String.class);

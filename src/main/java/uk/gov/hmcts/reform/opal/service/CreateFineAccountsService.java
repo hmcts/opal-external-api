@@ -3,8 +3,10 @@ package uk.gov.hmcts.reform.opal.service;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.opal.CPPSoapGateway.CreateFineAccountsRequest;
 import uk.gov.hmcts.reform.opal.CPPSoapGateway.CreateFineAccountsResponse;
 import uk.gov.hmcts.reform.opal.dto.OpalS2SRequestWrapper;
@@ -21,8 +23,11 @@ public class CreateFineAccountsService extends RestService {
     @Value("${s2s.api.create-account}")
     private String createFineAccountsApi;
 
-    public CreateFineAccountsService(RestClient restClient) {
+    private final AuthTokenGenerator authTokenGenerator;
+
+    public CreateFineAccountsService(RestClient restClient, final AuthTokenGenerator authTokenGenerator) {
         super(restClient);
+        this.authTokenGenerator = authTokenGenerator;
     }
 
     @Override
@@ -43,8 +48,9 @@ public class CreateFineAccountsService extends RestService {
         OpalS2SResponseWrapper opalS2SResponseWrapper = postToEndpoint(OpalS2SResponseWrapper.class,
                                                                        opalS2SRequestWrapper,
                                                                        createFineAccountsEndpoint +
-                                                                           createFineAccountsApi
-        );
+                                                                           createFineAccountsApi,
+                                                                       authTokenGenerator.generate());
+
         if (opalS2SResponseWrapper.getErrorDetail() != null) {
             log.error("Error response from back-end service: {}", opalS2SResponseWrapper.getErrorDetail());
             throw new RuntimeException(opalS2SResponseWrapper.getErrorDetail());
