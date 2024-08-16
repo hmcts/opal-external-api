@@ -53,8 +53,8 @@ azure:
 
 s2s:
   endpoints:
-    opal-fines-service: ${OPAL_FINES_S2S_URL:http://localhost:4553/opal}
-    opal-maintenance-service: ${OPAL_MAINTENANCE_S2S_URL:http://localhost:4554/opal}
+    opal-fines-service: ${OPAL_FINES_S2S_URL:http://localhost:4550}
+    opal-maintenance-service: ${OPAL_MAINTENANCE_S2S_URL:http://localhost:4554}
   api:
     create-account: ${OPAL_S2S_CREATE_ACCOUNT_API:/api/create-fine-accounts}
     debtor-profile: ${OPAL_S2S_DEBTOR_PROFILE_API:/api/debtor-profile-search}
