@@ -61,7 +61,7 @@ s2s:
 
 soap:
   keystore:
-    encoded-jks-string: ${OPAL_SOAP_JKS_STRING:default}
+    encoded-jks-string: ${OPAL_SOAP_JKS_STRING:MGUCAQMwEQYJKoZIhvcNAQcBoAQEAjAAME0wMTANBglghkgBZQMEAgEFAAQgqd4Ux1ffD3HwuOcCagm1cxNhQHlVFqmsLosMoI7lj7MEFDCXo+5IBTVrY0QuHPuDBdPXapxtAgInEA==}
     password: ${OPAL_SOAP_JKS_PASSWORD:default}
     aliases:
       private: ${OPAL_SOAP_PRIVATE_ALIAS:opal}
