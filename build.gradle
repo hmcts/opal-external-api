@@ -201,14 +201,14 @@ dependencies {
   wsdl2java 'com.sun.xml.bind:jaxb-core:4.0.5'
   wsdl2java 'com.sun.xml.bind:jaxb-impl:4.0.5'
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-core:4.0.5'
-  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.0.0'
+  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.0.5'
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.0.5'
   implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.0.5'
   implementation 'org.apache.cxf:cxf-rt-transports-http:4.0.5'
   implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.0.5'
   implementation 'org.apache.cxf:cxf-rt-ws-security:4.0.5'
   implementation 'org.apache.cxf:cxf-rt-features-logging:4.0.5'
-  implementation 'org.opensaml:opensaml-saml-impl:4.3.0'
+  implementation 'org.opensaml:opensaml-saml-impl:4.3.2'
   implementation 'org.opensaml:opensaml-xacml-impl:4.3.0'
   implementation 'org.opensaml:opensaml-xacml-saml-impl:4.3.0'
 
@@ -217,7 +217,7 @@ dependencies {
   testCompileOnly 'org.projectlombok:lombok:1.18.34'
   testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-  implementation 'org.apache.groovy:groovy:4.0.11'
+  implementation 'org.apache.groovy:groovy:4.0.22'
   implementation group: 'io.rest-assured', name: 'rest-assured'
 
   testImplementation(platform('org.junit:junit-bom:5.10.3'))
