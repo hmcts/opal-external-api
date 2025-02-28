@@ -217,7 +217,7 @@ dependencies {
   testCompileOnly 'org.projectlombok:lombok:1.18.36'
   testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
 
-  implementation 'org.apache.groovy:groovy:4.0.25'
+  implementation 'org.apache.groovy:groovy:4.0.26'
   implementation group: 'io.rest-assured', name: 'rest-assured'
 
   testImplementation(platform('org.junit:junit-bom:5.12.0'))
