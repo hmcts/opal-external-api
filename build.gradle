@@ -206,7 +206,7 @@ dependencies {
   implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.1.1'
   implementation 'org.apache.cxf:cxf-rt-transports-http:4.1.1'
   implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.1.1'
-  implementation 'org.apache.cxf:cxf-rt-ws-security:4.1.0'
+  implementation 'org.apache.cxf:cxf-rt-ws-security:4.1.1'
   implementation 'org.apache.cxf:cxf-rt-features-logging:4.1.1'
   implementation 'org.opensaml:opensaml-saml-impl:5.1.3'
   implementation 'org.opensaml:opensaml-xacml-impl:5.1.3'
