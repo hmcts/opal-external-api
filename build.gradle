@@ -168,9 +168,9 @@ dependencyCheck {
 repositories {
   mavenLocal()
   mavenCentral()
-  maven { url 'https://jitpack.io'
-    }
-  maven { url "https://build.shibboleth.net/maven/releases/" }
+  maven {
+    url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1'
+  }
 }
 
 ext {
@@ -185,7 +185,7 @@ dependencies {
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-json'
-  implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.8.8'
+  implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0'
 
   implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: '6.1.9'
 
@@ -208,9 +208,9 @@ dependencies {
   implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.1.2'
   implementation 'org.apache.cxf:cxf-rt-ws-security:4.1.2'
   implementation 'org.apache.cxf:cxf-rt-features-logging:4.1.2'
-  implementation 'org.opensaml:opensaml-saml-impl:5.1.4'
-  implementation 'org.opensaml:opensaml-xacml-impl:5.1.4'
-  implementation 'org.opensaml:opensaml-xacml-saml-impl:5.1.4'
+  implementation 'org.opensaml:opensaml-saml-impl:4.0.1'
+  implementation 'org.opensaml:opensaml-xacml-impl:4.0.1'
+  implementation 'org.opensaml:opensaml-xacml-saml-impl:4.0.1'
 
   compileOnly 'org.projectlombok:lombok:1.18.38'
   annotationProcessor 'org.projectlombok:lombok:1.18.38'
