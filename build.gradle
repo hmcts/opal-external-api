@@ -247,7 +247,7 @@ wrapper {
   distributionType = Wrapper.DistributionType.ALL
 }
 
-def allWsdl = task allWsdl {
+/* def allWsdl = task allWsdl {
   String[] wsdls = ["CPPSoapGateway"];
 
   wsdls.each {name->
@@ -289,3 +289,4 @@ def allWsdl = task allWsdl {
 allWsdl.dependsOn(tasks.matching { task -> task.name.startsWith( 'myWsdl' ) } )
 compileJava.dependsOn allWsdl
 sourceSets.main.java.srcDirs += 'src-gen/main/java/wsdl-xsd'
+*/
