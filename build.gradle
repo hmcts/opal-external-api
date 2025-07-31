@@ -207,9 +207,7 @@ dependencies {
   implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.1.2'
   implementation 'org.apache.cxf:cxf-rt-transports-http:4.1.2'
   implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.1.2'
-  implementation 'org.apache.cxf:cxf-rt-ws-security:4.1.2', {
-    exclude group: 'commons-io', module: 'commons-io'
-  }
+  implementation 'org.apache.cxf:cxf-rt-ws-security:4.1.2'
   implementation 'org.apache.cxf:cxf-rt-features-logging:4.1.2'
   implementation 'org.opensaml:opensaml-saml-impl:5.1.4'
   implementation 'org.opensaml:opensaml-xacml-impl:5.1.4'
@@ -232,6 +230,7 @@ dependencies {
   //Added to override dependency version to resolve vulnerability
   implementation 'org.apache.commons:commons-lang3:3.18.0'
   implementation 'commons-io:commons-io:2.20.0'
+  implementation 'org.apache.velocity:velocity-engine-core:2.4.1'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.opal.Application'
