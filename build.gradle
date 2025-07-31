@@ -227,6 +227,8 @@ dependencies {
     exclude group: 'junit', module: 'junit'
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
+  //Added to override dependency version to resolve vulnerability
+  implementation 'org.apache.commons:commons-lang3:3.18.0'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.opal.Application'
