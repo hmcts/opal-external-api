@@ -106,10 +106,10 @@ task smoke(type: Test) {
   classpath = sourceSets.smokeTest.runtimeClasspath
 }
 def coverageExclusions = [
-  '**/uk/gov/hmcts/reform/opal/CPPSoapGateway/**',
-  '**/uk/gov/hmcts/reform/opal/config/**',
-  '**/uk/gov/hmcts/reform/opal/exception/**',
-  '**/uk/gov/hmcts/reform/opal/util/**'
+    '**/uk/gov/hmcts/reform/opal/CPPSoapGateway/**',
+    '**/uk/gov/hmcts/reform/opal/config/**',
+    '**/uk/gov/hmcts/reform/opal/exception/**',
+    '**/uk/gov/hmcts/reform/opal/util/**'
 ]
 
 jacocoTestReport {
@@ -229,6 +229,7 @@ dependencies {
   }
   //Added to override dependency version to resolve vulnerability
   implementation 'org.apache.commons:commons-lang3:3.18.0'
+  implementation 'commons-io:commons-io:2.20.0'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.opal.Application'
@@ -253,8 +254,8 @@ wrapper {
 def allWsdl = task allWsdl {
   String[] wsdls = ["CPPSoapGateway"];
 
-  wsdls.each {name->
-    def thing = task "myWsdl${name}" (type: JavaExec) {
+  wsdls.each { name ->
+    def thing = task "myWsdl${name}"(type: JavaExec) {
       // Defining these mean the task can run incrementally
       inputs.files("${projectDir}/src/main/resources/schema")
       outputs.dir("${projectDir}/src-gen/main/java/wsdl-xsd")
@@ -273,8 +274,10 @@ def allWsdl = task allWsdl {
 
       final OutputStream baos = new ByteArrayOutputStream()
       errorOutput = new OutputStream() {
-        void write(int b) {System.err.write(b); baos.write(b) }
+        void write(int b) { System.err.write(b); baos.write(b) }
+
         void flush() { System.err.flush(); baos.flush() }
+
         void close() { System.err.close(); baos.close() }
       }
 
@@ -282,13 +285,13 @@ def allWsdl = task allWsdl {
         def str = baos.toString()
         if (str.contains('Usage : wsdl2java') || str.contains('WSDLToJava Error')) {
           throw new TaskExecutionException(tasks[name],
-            new IOException('Apache CXF WSDLToJava has failed. Please see System.err output.'))
+              new IOException('Apache CXF WSDLToJava has failed. Please see System.err output.'))
         }
       }
     }
   }
 }
 
-allWsdl.dependsOn(tasks.matching { task -> task.name.startsWith( 'myWsdl' ) } )
+allWsdl.dependsOn(tasks.matching { task -> task.name.startsWith('myWsdl') })
 compileJava.dependsOn allWsdl
 sourceSets.main.java.srcDirs += 'src-gen/main/java/wsdl-xsd'
