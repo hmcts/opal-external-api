@@ -233,7 +233,10 @@ dependencies {
   implementation 'org.apache.velocity:velocity-engine-core:2.4.1'
 }
 
-mainClassName = 'uk.gov.hmcts.reform.opal.Application'
+
+application {
+  mainClass.set('uk.gov.hmcts.reform.opal.Application')
+}
 
 bootJar {
   archiveFileName = "opal-external-api.jar"
@@ -269,7 +272,7 @@ def allWsdl = task allWsdl {
       outputs.dir genSrcDir
 
       classpath configurations.wsdl2java
-      main "org.apache.cxf.tools.wsdlto.WSDLToJava"
+      mainClass.set("org.apache.cxf.tools.wsdlto.WSDLToJava")
 
       args '-client', '-impl', '-exsh', 'true', '-noAddressBinding', '-autoNameResolution', "-wsdlLocation", "classpath:schema/${name}.wsdl", '-p', "uk.gov.hmcts.reform.opal.${name}", '-encoding', 'UTF-8', '-d', genSrcDir, '-b', bindingFile, wsdl
 
