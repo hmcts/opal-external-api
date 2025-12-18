@@ -229,7 +229,7 @@ dependencies {
   }
   //Added to override dependency version to resolve vulnerability
   implementation 'org.apache.commons:commons-lang3:3.18.0'
-  implementation 'commons-io:commons-io:2.20.0'
+  implementation 'commons-io:commons-io:2.21.0'
   implementation 'org.apache.velocity:velocity-engine-core:2.4.1'
 }
 
