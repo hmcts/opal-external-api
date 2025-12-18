@@ -213,10 +213,10 @@ dependencies {
   implementation 'org.opensaml:opensaml-xacml-impl:5.1.6'
   implementation 'org.opensaml:opensaml-xacml-saml-impl:5.1.6'
 
-  compileOnly 'org.projectlombok:lombok:1.18.40'
-  annotationProcessor 'org.projectlombok:lombok:1.18.40'
-  testCompileOnly 'org.projectlombok:lombok:1.18.40'
-  testAnnotationProcessor 'org.projectlombok:lombok:1.18.40'
+  compileOnly 'org.projectlombok:lombok:1.18.42'
+  annotationProcessor 'org.projectlombok:lombok:1.18.42'
+  testCompileOnly 'org.projectlombok:lombok:1.18.42'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
 
   implementation 'org.apache.groovy:groovy:5.0.3'
   implementation group: 'io.rest-assured', name: 'rest-assured'
