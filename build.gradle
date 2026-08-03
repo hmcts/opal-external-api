@@ -193,7 +193,7 @@ dependencies {
   implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4JVersion}"
 
   implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.5'
-  implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.2'
+  implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.3'
   wsdl2java 'com.sun.xml.bind:jaxb-ri:4.0.9'
   wsdl2java 'com.sun.xml.bind:jaxb-xjc:4.0.9'
   wsdl2java 'com.sun.xml.bind:jaxb-core:4.0.9'
