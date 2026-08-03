@@ -186,7 +186,7 @@ dependencies {
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
   implementation "org.springframework.boot:spring-boot-starter-aspectj"
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-json'
-  implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2'
+  implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0'
 
   implementation 'com.github.hmcts.java-logging:logging:8.0.0'
   implementation "org.apache.logging.log4j:log4j-api:${log4JVersion}"
