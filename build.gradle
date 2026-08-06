@@ -200,7 +200,7 @@ dependencies {
   wsdl2java 'com.sun.xml.bind:jaxb-impl:4.0.9'
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-core:4.2.3'
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.2.2'
-  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.2.2'
+  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.2.3'
   implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.2.3'
   implementation 'org.apache.cxf:cxf-rt-transports-http:4.2.3'
   implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.2.3'
