@@ -202,7 +202,7 @@ dependencies {
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.2.2'
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.2.2'
   implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.2.3'
-  implementation 'org.apache.cxf:cxf-rt-transports-http:4.2.2'
+  implementation 'org.apache.cxf:cxf-rt-transports-http:4.2.3'
   implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.2.2'
   implementation 'org.apache.cxf:cxf-rt-ws-security:4.2.2'
   implementation 'org.apache.cxf:cxf-rt-features-logging:4.2.3'
