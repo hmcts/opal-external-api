@@ -186,26 +186,26 @@ dependencies {
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
   implementation "org.springframework.boot:spring-boot-starter-aspectj"
   implementation group: 'org.springframework.boot', name: 'spring-boot-starter-json'
-  implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2'
+  implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0'
 
   implementation 'com.github.hmcts.java-logging:logging:8.0.0'
   implementation "org.apache.logging.log4j:log4j-api:${log4JVersion}"
   implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4JVersion}"
 
-  implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.4'
-  implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.2'
+  implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.5'
+  implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.3'
   wsdl2java 'com.sun.xml.bind:jaxb-ri:4.0.9'
   wsdl2java 'com.sun.xml.bind:jaxb-xjc:4.0.9'
   wsdl2java 'com.sun.xml.bind:jaxb-core:4.0.9'
   wsdl2java 'com.sun.xml.bind:jaxb-impl:4.0.9'
-  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-core:4.2.2'
+  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-core:4.2.3'
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.2.2'
   wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.2.2'
-  implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.2.2'
-  implementation 'org.apache.cxf:cxf-rt-transports-http:4.2.2'
-  implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.2.2'
-  implementation 'org.apache.cxf:cxf-rt-ws-security:4.2.2'
-  implementation 'org.apache.cxf:cxf-rt-features-logging:4.2.2'
+  implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.2.3'
+  implementation 'org.apache.cxf:cxf-rt-transports-http:4.2.3'
+  implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.2.3'
+  implementation 'org.apache.cxf:cxf-rt-ws-security:4.2.3'
+  implementation 'org.apache.cxf:cxf-rt-features-logging:4.2.3'
 
   compileOnly 'org.projectlombok:lombok:1.18.46'
   annotationProcessor 'org.projectlombok:lombok:1.18.46'
@@ -215,7 +215,7 @@ dependencies {
 //  implementation 'org.apache.groovy:groovy:5.0.3'
 
   testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-  testImplementation(platform('org.junit:junit-bom:5.14.1'))
+  testImplementation(platform('org.junit:junit-bom:6.1.2'))
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
   testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', {
     exclude group: 'junit', module: 'junit'
