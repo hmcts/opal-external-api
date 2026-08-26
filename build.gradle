@@ -233,6 +233,7 @@ dependencies {
   implementation "org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}"
   implementation "org.apache.tomcat.embed:tomcat-embed-websocket:${tomcatVersion}"
   implementation "org.apache.httpcomponents.client5:httpclient5:${httpClient5Version}"
+  implementation "org.apache.httpcomponents.client5:httpclient5-cache:${httpClient5Version}"
   implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationsVersion}"
   implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
