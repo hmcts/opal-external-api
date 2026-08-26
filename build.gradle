@@ -176,6 +176,7 @@ repositories {
 
 ext {
   cxfVersion = "4.2.3"
+  httpClient5Version = "5.6.4"
   jacksonAnnotationsVersion = "2.22"
   jacksonVersion = "2.22.2"
   log4JVersion = "2.26.1"
@@ -231,6 +232,7 @@ dependencies {
   implementation "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
   implementation "org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}"
   implementation "org.apache.tomcat.embed:tomcat-embed-websocket:${tomcatVersion}"
+  implementation "org.apache.httpcomponents.client5:httpclient5:${httpClient5Version}"
   implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationsVersion}"
   implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
