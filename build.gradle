@@ -175,8 +175,12 @@ repositories {
 }
 
 ext {
+  cxfVersion = "4.2.3"
+  jacksonAnnotationsVersion = "2.22"
+  jacksonVersion = "2.22.2"
   log4JVersion = "2.26.1"
   logbackVersion = "1.6.1"
+  tomcatVersion = "11.0.25"
 }
 
 ext['snakeyaml.version'] = '2.0'
@@ -198,14 +202,14 @@ dependencies {
   wsdl2java 'com.sun.xml.bind:jaxb-xjc:4.0.9'
   wsdl2java 'com.sun.xml.bind:jaxb-core:4.0.9'
   wsdl2java 'com.sun.xml.bind:jaxb-impl:4.0.9'
-  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-core:4.2.3'
-  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.2.2'
-  wsdl2java 'org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.2.2'
-  implementation 'org.apache.cxf:cxf-rt-frontend-jaxws:4.2.3'
-  implementation 'org.apache.cxf:cxf-rt-transports-http:4.2.3'
-  implementation 'org.apache.cxf:cxf-rt-transports-http-hc:4.2.3'
-  implementation 'org.apache.cxf:cxf-rt-ws-security:4.2.3'
-  implementation 'org.apache.cxf:cxf-rt-features-logging:4.2.3'
+  wsdl2java "org.apache.cxf:cxf-tools-wsdlto-core:${cxfVersion}"
+  wsdl2java "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion}"
+  wsdl2java "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}"
+  implementation "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
+  implementation "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
+  implementation "org.apache.cxf:cxf-rt-transports-http-hc:${cxfVersion}"
+  implementation "org.apache.cxf:cxf-rt-ws-security:${cxfVersion}"
+  implementation "org.apache.cxf:cxf-rt-features-logging:${cxfVersion}"
 
   compileOnly 'org.projectlombok:lombok:1.18.46'
   annotationProcessor 'org.projectlombok:lombok:1.18.46'
@@ -223,10 +227,13 @@ dependencies {
   }
 
   testImplementation 'io.rest-assured:rest-assured:6.0.1'
-  //Added to override dependency version to resolve vulnerability
-  implementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.24'
-  implementation 'org.apache.tomcat.embed:tomcat-embed-websocket:11.0.24'
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.22.1'
+  // Align direct security overrides so the resolved graph does not keep older vulnerable transitives.
+  implementation "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
+  implementation "org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}"
+  implementation "org.apache.tomcat.embed:tomcat-embed-websocket:${tomcatVersion}"
+  implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationsVersion}"
+  implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+  implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
   implementation 'org.apache.httpcomponents.core5:httpcore5:5.4.3'
   implementation 'org.apache.httpcomponents.core5:httpcore5-h2:5.4.3'
   implementation 'org.apache.neethi:neethi:3.2.3'
