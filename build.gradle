@@ -181,7 +181,7 @@ ext {
   jacksonVersion = "2.22.2"
   log4JVersion = "2.26.1"
   logbackVersion = "1.6.1"
-  tomcatVersion = "11.0.25"
+  tomcatVersion = "11.0.26"
 }
 
 ext['snakeyaml.version'] = '2.0'
