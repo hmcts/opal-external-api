@@ -238,7 +238,7 @@ dependencies {
   implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
   implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
   implementation 'org.apache.httpcomponents.core5:httpcore5:5.4.4'
-  implementation 'org.apache.httpcomponents.core5:httpcore5-h2:5.4.3'
+  implementation 'org.apache.httpcomponents.core5:httpcore5-h2:5.4.4'
   implementation 'org.apache.neethi:neethi:3.2.4'
 }
 
