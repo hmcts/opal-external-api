@@ -182,6 +182,8 @@ ext {
   log4JVersion = "2.26.1"
   logbackVersion = "1.6.1"
   tomcatVersion = "11.0.26"
+  wss4jVersion = "4.0.2"
+  xmlSchemaVersion = "2.3.3"
 }
 
 ext['snakeyaml.version'] = '2.0'
@@ -206,11 +208,18 @@ dependencies {
   wsdl2java "org.apache.cxf:cxf-tools-wsdlto-core:${cxfVersion}"
   wsdl2java "org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:${cxfVersion}"
   wsdl2java "org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:${cxfVersion}"
+  wsdl2java "org.apache.ws.xmlschema:xmlschema-core:${xmlSchemaVersion}"
   implementation "org.apache.cxf:cxf-rt-frontend-jaxws:${cxfVersion}"
   implementation "org.apache.cxf:cxf-rt-transports-http:${cxfVersion}"
   implementation "org.apache.cxf:cxf-rt-transports-http-hc:${cxfVersion}"
   implementation "org.apache.cxf:cxf-rt-ws-security:${cxfVersion}"
   implementation "org.apache.cxf:cxf-rt-features-logging:${cxfVersion}"
+  // CXF 4.2.3 still brings in vulnerable WSS4J and XMLSchema versions.
+  implementation "org.apache.wss4j:wss4j-ws-security-dom:${wss4jVersion}"
+  implementation "org.apache.wss4j:wss4j-policy:${wss4jVersion}"
+  implementation "org.apache.wss4j:wss4j-ws-security-stax:${wss4jVersion}"
+  implementation "org.apache.wss4j:wss4j-ws-security-policy-stax:${wss4jVersion}"
+  implementation "org.apache.ws.xmlschema:xmlschema-core:${xmlSchemaVersion}"
 
   compileOnly 'org.projectlombok:lombok:1.18.48'
   annotationProcessor 'org.projectlombok:lombok:1.18.48'
