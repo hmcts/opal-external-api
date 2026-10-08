@@ -175,7 +175,7 @@ repositories {
 }
 
 ext {
-  cxfVersion = "4.2.3"
+  cxfVersion = "4.2.4"
   httpClient5Version = "5.6.4"
   jacksonAnnotationsVersion = "2.22"
   jacksonVersion = "2.22.3"
