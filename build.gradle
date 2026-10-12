@@ -236,7 +236,7 @@ dependencies {
     exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
   }
 
-  testImplementation 'io.rest-assured:rest-assured:6.0.1'
+  testImplementation 'io.rest-assured:rest-assured:6.1.0'
   // Align direct security overrides so the resolved graph does not keep older vulnerable transitives.
   implementation "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
   implementation "org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}"
