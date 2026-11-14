@@ -181,7 +181,7 @@ ext {
   jacksonVersion = "2.23.0"
   log4JVersion = "2.26.1"
   logbackVersion = "1.6.1"
-  tomcatVersion = "11.0.27"
+  tomcatVersion = "11.0.29"
   wss4jVersion = "4.0.2"
   xmlSchemaVersion = "2.3.3"
 }
