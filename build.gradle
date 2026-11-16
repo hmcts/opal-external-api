@@ -182,7 +182,7 @@ ext {
   log4JVersion = "2.26.1"
   logbackVersion = "1.6.1"
   tomcatVersion = "11.0.29"
-  wss4jVersion = "4.0.2"
+  wss4jVersion = "4.0.3"
   xmlSchemaVersion = "2.3.3"
 }
 
