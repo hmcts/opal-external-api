@@ -8,5 +8,21 @@
     <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
     <cve>CVE-2023-35116</cve>
   </suppress>
+  <suppress until="2026-12-20Z">
+    <notes><![CDATA[
+      False positive in Jenkins: Dependency-Check reports both CVEs against httpcore5 5.5.
+      CVE-2026-54399 affects httpcore5 5.4.2 and earlier, or 5.5-beta1 and earlier;
+      the final 5.5 release is not affected. CVE-2026-54428 affects the separate
+      httpcore5-h2 artifact, not httpcore5, and only those same older versions.
+      This suppression applies only to httpcore5 5.5; it does not hide findings
+      against httpcore5-h2 or other HttpComponents versions.
+      Checked against the Apache advisories on 2026-11-20:
+      https://lists.apache.org/thread/zmxh1pl2zohov5ntdh4lt85gfrlchgpy
+      https://lists.apache.org/thread/5zjp8vczvxq19pw2rvhs21q446bhl0sd
+    ]]></notes>
+    <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents\.core5/httpcore5@5\.5$</packageUrl>
+    <cve>CVE-2026-54399</cve>
+    <cve>CVE-2026-54428</cve>
+  </suppress>
   <!--End of false positives section -->
 </suppressions>
